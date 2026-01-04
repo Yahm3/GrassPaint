@@ -295,7 +295,7 @@ public class Draw extends JFrame implements ActionListener {
     String mitLicense = """
                 MIT License
 
-        Copyright (c) 2025 INNOCENT-ops806
+        Copyright (c) 2025 Yahm3 
 
         Permission is hereby granted, free of charge, to any person obtaining a copy
         of this software and associated documentation files (the "Software"), to deal

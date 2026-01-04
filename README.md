@@ -1,6 +1,6 @@
 # GrassPaint (Touch some grass by drawing some grass)
 
-[](https://www.google.com/search?q=https://github.com/INNOCENT-ops806/GrassPaint/releases/tag/v1.0.0)
+[](https://www.google.com/search?q=https://github.com/Yahm3/GrassPaint/releases/tag/v1.0.0)
 
 > [\!NOTE]
 > The project is a work in progress so anything might change at any time.
@@ -42,7 +42,7 @@ You must have **Java Development Kit (JDK) 17 or newer** installed to compile an
 ### Installation
 
 ```sh
-git clone https://github.com/INNOCENT-ops806/GrassPaint.git
+git clone https://github.com/Yahm3/GrassPaint.git
 cd GrassPaint
 ```
 
@@ -62,7 +62,7 @@ chmod +x run.sh
 
 #### B. Download the JAR File
 
-Download the executable `.jar` file from the latest release on GitHub: [Releases](https://github.com/INNOCENT-ops806/GrassPaint/releases/)
+Download the executable `.jar` file from the latest release on GitHub: [Releases](https://github.com/Yahm3/GrassPaint/releases/)
 
 To run the JAR file:
 
