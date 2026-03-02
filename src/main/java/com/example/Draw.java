@@ -1,10 +1,14 @@
 package com.example;
 
 import com.environment.WindowTools;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -53,6 +57,7 @@ public class Draw extends JFrame implements ActionListener {
     thicknessStat = new JLabel("Size: 0px");
 
     // :NOTE: Frame stuff
+    this.setIconImage(new ImageIcon(getClass().getResource("/icons/logo.png")).getImage());
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLocationRelativeTo(null);
     this.setSize(900, 600);
@@ -257,13 +262,39 @@ public class Draw extends JFrame implements ActionListener {
   }
 
   private JMenu settingMenu() {
-    Icon exitIcon = new ImageIcon(getClass().getResource("/icons/exit.png"));
     JMenu setting = new JMenu("Setting");
+    String[] themes = { "Light", "Dark", "Gradient Blue", "Gradient Green", "darkPurple" };
+
+    Icon exitIcon = new ImageIcon(getClass().getResource("/icons/exit.png"));
     JMenuItem exit = new JMenuItem("Exit", exitIcon);
+    JMenu theme = new JMenu("Theme");
+
+    for (String theme_name : themes) {
+      JMenuItem item = new JMenuItem(theme_name);
+      item.addActionListener((e) -> {
+        if (theme_name.equalsIgnoreCase("light")) {
+          FlatLightLaf.setup();
+        } else if (theme_name.equalsIgnoreCase("dark")) {
+          FlatDarkLaf.setup();
+        } else if (theme_name.equalsIgnoreCase("Gradient Green")) {
+          com.formdev.flatlaf.intellijthemes.FlatGradiantoNatureGreenIJTheme.setup();
+        } else if (theme_name.equalsIgnoreCase("Gradient Blue")) {
+          com.formdev.flatlaf.intellijthemes.FlatGradiantoMidnightBlueIJTheme.setup();
+        } else if (theme_name.equalsIgnoreCase("darkPurple")) {
+          com.formdev.flatlaf.intellijthemes.FlatDarkPurpleIJTheme.setup();
+        } else {
+          JOptionPane.showMessageDialog(null, "Could not set " + theme_name, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        SwingUtilities.updateComponentTreeUI(this);
+        System.out.println("[INFO] Current theme: " + theme_name);
+      });
+      theme.add(item);
+    }
 
     exit.setAccelerator(KeyStroke.getKeyStroke('C', InputEvent.CTRL_DOWN_MASK));
     exit.setActionCommand("Exit");
     exit.addActionListener(this);
+    setting.add(theme);
     setting.add(exit);
     return setting;
   }
@@ -295,7 +326,7 @@ public class Draw extends JFrame implements ActionListener {
     String mitLicense = """
                 MIT License
 
-        Copyright (c) 2025 Yahm3 
+        Copyright (c) 2025 Yahm3
 
         Permission is hereby granted, free of charge, to any person obtaining a copy
         of this software and associated documentation files (the "Software"), to deal
