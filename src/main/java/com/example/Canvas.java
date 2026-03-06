@@ -30,6 +30,8 @@ public class Canvas extends JPanel {
   private MouseMotionAdapter motion;
   public final static Color LIGHT = new Color(255, 255, 255);
 
+  private Color currentColor = Color.BLACK;
+
   public Canvas() {
     defaultListener();
     this.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -121,7 +123,7 @@ public class Canvas extends JPanel {
     g = (Graphics2D) img.getGraphics();
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
         RenderingHints.VALUE_ANTIALIAS_ON);
-    g.setPaint(Color.black);
+    g.setPaint(currentColor);
     repaint();
   }
 
@@ -198,9 +200,7 @@ public class Canvas extends JPanel {
     defaultListener();
   }
 
-  public void chooser(Color color) {
-    g.setPaint(color);
-  }
+
 
   public void setBackground(Image img) {
     copyImage(img);
@@ -211,35 +211,12 @@ public class Canvas extends JPanel {
     g.setStroke(new BasicStroke(thick));
   }
 
-  public void red() {
-    g.setPaint(Color.RED);
-  }
-
-  public void pink() {
-    g.setPaint(Color.PINK);
-  }
-
-  public void blue() {
-    g.setPaint(Color.BLUE);
-  }
-
-  public void gray() {
-    g.setPaint(Color.GRAY);
-  }
-
-  public void green() {
-    g.setPaint(Color.GREEN);
-  }
-
-  public void white() {
-    g.setPaint(Color.WHITE);
-  }
-
-  public void yellow() {
-    g.setPaint(Color.YELLOW);
-  }
-
-  public void black() {
-    g.setPaint(Color.BLACK);
-  }
+  public void chooser(Color color) { currentColor = color; g.setPaint(color); }
+  public void red()    { currentColor = Color.RED;    g.setPaint(currentColor); }
+  public void pink()   { currentColor = Color.PINK;   g.setPaint(currentColor); }
+  public void blue()   { currentColor = Color.BLUE;   g.setPaint(currentColor); }
+  public void gray()   { currentColor = Color.GRAY;   g.setPaint(currentColor); }
+  public void green()  { currentColor = Color.GREEN;  g.setPaint(currentColor); }
+  public void yellow() { currentColor = Color.YELLOW; g.setPaint(currentColor); }
+  public void black()  { currentColor = Color.BLACK;  g.setPaint(currentColor); }
 }
