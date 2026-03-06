@@ -427,7 +427,7 @@ public class Draw extends JFrame implements ActionListener {
     } else if (e.getSource() == yellow) {
       canvas.yellow();
     } else if (e.getSource() == white) {
-      canvas.white();
+      canvas.green();
     } else if (e.getSource() == gray) {
       canvas.gray();
     }
