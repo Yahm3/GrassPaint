@@ -1,17 +1,12 @@
 # GrassPaint (Touch some grass by drawing some grass)
 
-[](https://www.google.com/search?q=https://github.com/Yahm3/GrassPaint/releases/tag/v1.0.0)
-
-> [\!NOTE]
-> The project is a work in progress so anything might change at any time.
-
 ## Description
 
 GrassPaint is a cross-platform drawing application built on Java Swing, designed for users who prioritize **keyboard-centric workflows** and speed.
 
 I initially had the idea for this software after buying a drawing tablet and feeling constrained by the limited and rigid shortcuts in existing applications. While GrassPaint doesn't implement Vim's modal editing, it is engineered to offer a high degree of **shortcut customization** and key bindings to boost your drawing efficiency.
 
-## Key Features (v1.0.0)
+## Key Features
 
 This current release includes the essential features for the core drawing engine:
 
@@ -72,21 +67,25 @@ java -jar /path/to/GrassPaint-v1.0.0-SNAPSHOT-jar-with-dependencies.jar
 
 ## Screenshots
 
-### GrassPaintV0.9.0
+### GrassPaint
 
-![GrassPaintV0.9.0](screenshots/GrassPaint.png)
+![GrassPaint](screenshots/GrassPaint.png)
+
+### Themes
+
+![GrassPaint](screenshots/themes.png)
 
 ### Picking a color
 
-![GrassPaintV0.9.0](screenshots/GrassPaint_ColorChooser.png)
+![GrassPaint](screenshots/GrassPaint_ColorChooser.png)
 
 ### Opening an image
 
-![GrassPaintV0.9.0](screenshots/GrassPaint_OpenedImage.png)
+![GrassPaint](screenshots/GrassPaint_OpenedImage.png)
 
 ### License dialog
 
-![GrassPaintV0.9.0](screenshots/GrassPaint_License.png)
+![GrassPaint](screenshots/GrassPaint_License.png)
 
 ## Reporting Bugs & Feedback (Beta)
 
