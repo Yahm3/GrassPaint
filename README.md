@@ -87,16 +87,6 @@ java -jar /path/to/GrassPaint-v1.0.0-SNAPSHOT-jar-with-dependencies.jar
 
 ![GrassPaint](screenshots/GrassPaint_License.png)
 
-## Reporting Bugs & Feedback (Beta)
-
-If you find a bug, please open an Issue on this repository or send a detailed email.
-
-**When reporting an issue, please include:**
-
-1. Operating System (e.g., Windows 10, Kali/WSL2).
-2. Your Java Version (`java -version`).
-3. The exact steps required to reproduce the issue.
-
 ## Libraries and Credits
 
 ### Libraries
