@@ -35,13 +35,13 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JFileChooser;
 
 public class Draw extends JFrame implements ActionListener {
   private int saveCounter;
   private Canvas canvas;
   private JLabel filenameBar, thicknessStat;
-  private JFileChooser fileChooser;
   private File file;
   private Color color = Color.WHITE;
   private JButton pencil, eraser, color_picker, gray, red, pink, black, green, white, yellow, blue;
@@ -365,28 +365,63 @@ public class Draw extends JFrame implements ActionListener {
     if (e.getActionCommand().equals("Exit")) {
       System.exit(0);
     } else if (e.getActionCommand().equals("Save File")) {
-      System.out.println("Save pressed...");
+      System.out.println("[INFO]: Save pressed...");
       if (saveCounter == 0) {
-        fileChooser = new JFileChooser();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.addChoosableFileFilter(com.example.FileFilter.png);
+        fileChooser.addChoosableFileFilter(com.example.FileFilter.jpeg);
+        fileChooser.addChoosableFileFilter(com.example.FileFilter.jpeg);
+        fileChooser.addChoosableFileFilter(com.example.FileFilter.ppm);
+
+        FileNameExtensionFilter pngFilter = new FileNameExtensionFilter("PNG files", "png");
+        fileChooser.setFileFilter(pngFilter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
         int returnVal = fileChooser.showSaveDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
           file = fileChooser.getSelectedFile();
+
+          String path = file.getAbsolutePath();
+          FileNameExtensionFilter selectedFile = (FileNameExtensionFilter) fileChooser.getFileFilter();
+          String extension = selectedFile.getExtensions()[0];
+
+          if (!path.toLowerCase().endsWith("." + extension)) {
+            file = new File(path + "." + extension);
+          }
+
+          if (file.exists()) {
+            int choice = JOptionPane.showConfirmDialog(this,
+                "The file '" + file.getName() + "' already exists. Overwrite?",
+                "Save Confirmation", JOptionPane.YES_NO_OPTION);
+            if (choice != JOptionPane.YES_NO_OPTION) {
+              return;
+            }
+          }
+
           saveCounter = 1;
           filenameBar.setText(file.toString());
           canvas.saveFile(file);
+        } else {
+          return;
         }
       } else {
         filenameBar.setText(file.toString());
         canvas.saveFile(file);
       }
     } else if (e.getSource() == open) {
+      String path = "";
       if (System.getProperty("os.name").equalsIgnoreCase("Linux")) {
-        fileChooser = new JFileChooser("~/");
+        path = "~/";
       } else {
-        fileChooser = new JFileChooser("C:\\");
+        path = "C:\\";
       }
-      fileChooser.setFileFilter(FileFilter.png);
-      fileChooser = new JFileChooser();
+      JFileChooser fileChooser = new JFileChooser(path);
+      fileChooser.addChoosableFileFilter(com.example.FileFilter.jpg);
+      fileChooser.addChoosableFileFilter(com.example.FileFilter.jpeg);
+      fileChooser.addChoosableFileFilter(com.example.FileFilter.ppm);
+
+      FileNameExtensionFilter pngFilter = new FileNameExtensionFilter("PNG files", "png");
+      fileChooser.setFileFilter(pngFilter);
+      fileChooser.setAcceptAllFileFilterUsed(false);
       if (fileChooser.showOpenDialog(open) == JFileChooser.APPROVE_OPTION) {
         file = fileChooser.getSelectedFile();
         canvas.openFile(file);
@@ -394,6 +429,7 @@ public class Draw extends JFrame implements ActionListener {
         updateFrameLayout();
       } else {
         System.err.println("[INFO] User cancelled opening file");
+        return;
       }
     } else if (e.getActionCommand().equals("undo")) {
       canvas.undo();
