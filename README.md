@@ -14,7 +14,7 @@ This current release includes the essential features for the core drawing engine
 - **Canvas Control:** Resizable drawing canvas and dynamic resizing upon image loading.
 - **Refined UI Feedback:** The thickness slider value is only displayed while the slider is actively being dragged.
 - **Core Tools:** Pencil, Eraser (with dynamic background matching), Color Picker, and color presets.
-- **I/O:** Load and save artwork as PNG files(currently you have to specify the extension but in future releases they will be automatically appended).
+- **I/O:** Load and save artwork files
 
 ## Shortcuts
 
