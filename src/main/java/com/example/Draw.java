@@ -247,7 +247,7 @@ public class Draw extends JFrame implements ActionListener {
     Icon redoIcon = new ImageIcon(getClass().getResource("/icons/redo.png"));
 
     JMenuItem undo = new JMenuItem("undo", undoIcon);
-    undo.setAccelerator(KeyStroke.getKeyStroke('U', InputEvent.CTRL_DOWN_MASK));
+    undo.setAccelerator(KeyStroke.getKeyStroke('Z', InputEvent.CTRL_DOWN_MASK));
     undo.setActionCommand("undo");
     undo.addActionListener(this);
     editMenu.add(undo);
