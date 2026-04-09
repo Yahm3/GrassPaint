@@ -272,6 +272,7 @@ public class Draw extends JFrame implements ActionListener {
     for (String theme_name : themes) {
       JMenuItem item = new JMenuItem(theme_name);
       item.addActionListener((e) -> {
+        boolean isDark = theme_name.toLowerCase().contains("dark") || theme_name.toLowerCase().contains("gradient");
         if (theme_name.equalsIgnoreCase("light")) {
           FlatLightLaf.setup();
         } else if (theme_name.equalsIgnoreCase("dark")) {
@@ -286,6 +287,7 @@ public class Draw extends JFrame implements ActionListener {
           JOptionPane.showMessageDialog(null, "Could not set " + theme_name, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         SwingUtilities.updateComponentTreeUI(this);
+        canvas.updateTheme(isDark);
         System.out.println("[INFO] Current theme: " + theme_name);
       });
       theme.add(item);
@@ -463,7 +465,7 @@ public class Draw extends JFrame implements ActionListener {
     } else if (e.getSource() == yellow) {
       canvas.yellow();
     } else if (e.getSource() == white) {
-      canvas.green();
+      canvas.white();
     } else if (e.getSource() == gray) {
       canvas.gray();
     }

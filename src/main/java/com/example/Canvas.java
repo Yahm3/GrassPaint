@@ -28,7 +28,10 @@ public class Canvas extends JPanel {
   private final Custom_Stack<Image> redoStack = new Custom_Stack<>(10);
   private MouseListener listener;
   private MouseMotionAdapter motion;
+  private boolean isDarkTheme = false;
   public final static Color LIGHT = new Color(255, 255, 255);
+  public final static Color DARK_BG = new Color(30, 30, 30);
+  private Color canvasBackground = Color.WHITE;
 
   private Color currentColor = Color.BLACK;
 
@@ -37,6 +40,38 @@ public class Canvas extends JPanel {
     this.setBorder(BorderFactory.createLineBorder(Color.GRAY));
     this.setPreferredSize(new Dimension(900, 600));
     System.out.println("[INFO] Canvas working...");
+  }
+
+  public void updateTheme(boolean dark) {
+    this.isDarkTheme = dark;
+    Color oldBg = canvasBackground;
+    Color newBg = dark ? new Color(45, 45, 45) : Color.WHITE;
+    canvasBackground = newBg;
+
+    if (g != null && img != null) {
+      BufferedImage buf = (BufferedImage) img;
+      int oldRGB = oldBg.getRGB();
+      int newRGB = newBg.getRGB();
+      for (int x = 0; x < buf.getWidth(); x++) {
+        for (int y = 0; y < buf.getHeight(); y++) {
+          if (buf.getRGB(x, y) == oldRGB) {
+            buf.setRGB(x, y, newRGB);
+          }
+        }
+      }
+      g.setPaint(currentColor);
+    }
+    repaint();
+  }
+
+  public void invertCanvas() {
+    for (int x = 0; x < img.getWidth(null); x++) {
+      for (int y = 0; y < img.getHeight(null); y++) {
+        int rgba = ((BufferedImage) img).getRGB(x, y);
+        ((BufferedImage) img).setRGB(x, y, rgba ^ 0xFFFFFF);
+      }
+    }
+    repaint();
   }
 
   public void saveFile(File file) {
@@ -135,9 +170,9 @@ public class Canvas extends JPanel {
     g = (Graphics2D) img.getGraphics();
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
         RenderingHints.VALUE_ANTIALIAS_ON);
-    g.setPaint(Color.WHITE);
+    g.setPaint(canvasBackground);
     g.fillRect(0, 0, getWidth(), getHeight());
-    g.setPaint(Color.black);
+    g.setPaint(Color.black);// :BUG: Could likely cause a bug here
     new Rectangle(0, 0, getSize().width - 1, getSize().height - 1);
   }
 
@@ -148,29 +183,27 @@ public class Canvas extends JPanel {
       img = createImage(getWidth(), getHeight());
       g = (Graphics2D) img.getGraphics();
       g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-      g.setPaint(Color.WHITE);
+      g.setPaint(canvasBackground);
       g.fillRect(0, 0, getWidth(), getHeight());
-      g.setPaint(Color.BLACK);
+      g.setPaint(currentColor);
     } else if (img.getWidth(null) < getWidth() || img.getHeight(null) < getHeight()) {
       Image newImg = createImage(getWidth(), getHeight());
       Graphics2D newG = (Graphics2D) newImg.getGraphics();
       newG.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-      newG.setPaint(Color.WHITE);
+      newG.setPaint(canvasBackground);
       newG.fillRect(0, 0, getWidth(), getHeight());
 
       newG.drawImage(img, 0, 0, null);
 
       this.img = newImg;
       this.g = newG;
-      this.g.setPaint(Color.BLACK);
+      this.g.setPaint(currentColor);
     }
 
     g1.drawImage(img, 0, 0, null);
-    Graphics2D g2d_Screen = (Graphics2D) g1;
-    g2d_Screen.setColor(Color.RED);
-    g2d_Screen.setStroke(new BasicStroke(1));
-    g2d_Screen.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+    g1.setColor(isDarkTheme ? Color.DARK_GRAY : Color.RED);
+    g1.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
   }
 
   public void undo() {
@@ -191,7 +224,7 @@ public class Canvas extends JPanel {
   }
 
   public void eraserColor() {
-    g.setPaint(LIGHT);
+    g.setPaint(canvasBackground);
   }
 
   public void pencil() {
@@ -199,8 +232,6 @@ public class Canvas extends JPanel {
     removeMouseMotionListener(motion);
     defaultListener();
   }
-
-
 
   public void setBackground(Image img) {
     copyImage(img);
@@ -211,12 +242,48 @@ public class Canvas extends JPanel {
     g.setStroke(new BasicStroke(thick));
   }
 
-  public void chooser(Color color) { currentColor = color; g.setPaint(color); }
-  public void red()    { currentColor = Color.RED;    g.setPaint(currentColor); }
-  public void pink()   { currentColor = Color.PINK;   g.setPaint(currentColor); }
-  public void blue()   { currentColor = Color.BLUE;   g.setPaint(currentColor); }
-  public void gray()   { currentColor = Color.GRAY;   g.setPaint(currentColor); }
-  public void green()  { currentColor = Color.GREEN;  g.setPaint(currentColor); }
-  public void yellow() { currentColor = Color.YELLOW; g.setPaint(currentColor); }
-  public void black()  { currentColor = Color.BLACK;  g.setPaint(currentColor); }
+  public void chooser(Color color) {
+    currentColor = color;
+    g.setPaint(color);
+  }
+
+  public void red() {
+    currentColor = Color.RED;
+    g.setPaint(currentColor);
+  }
+
+  public void pink() {
+    currentColor = Color.PINK;
+    g.setPaint(currentColor);
+  }
+
+  public void blue() {
+    currentColor = Color.BLUE;
+    g.setPaint(currentColor);
+  }
+
+  public void gray() {
+    currentColor = Color.GRAY;
+    g.setPaint(currentColor);
+  }
+
+  public void green() {
+    currentColor = Color.GREEN;
+    g.setPaint(currentColor);
+  }
+
+  public void white() {
+    currentColor = Color.WHITE;
+    g.setPaint(currentColor);
+  }
+
+  public void yellow() {
+    currentColor = Color.YELLOW;
+    g.setPaint(currentColor);
+  }
+
+  public void black() {
+    currentColor = Color.BLACK;
+    g.setPaint(currentColor);
+  }
 }
